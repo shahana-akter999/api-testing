@@ -1,0 +1,203 @@
+{
+	"info": {
+		"_postman_id": "62b3ca58-6357-4e5e-883e-80a477fa1ef6",
+		"name": "practice",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27297261"
+	},
+	"item": [
+		{
+			"name": "create student deatils",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response. json ()\r",
+							"pm.environment.set(\"id\", jsonData.id)\r",
+							"\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const moment = require ('moment')\r",
+							"const dateofbirth  = moment()\r",
+							"pm.environment.set(\"date_of_birth\", dateofbirth .format (\"DD-MM-YYYY\"))\r",
+							"\r",
+							"var firstname = pm.variables.replaceIn (\"{{$randomFirstName}}\")\r",
+							"console.log(\"first Name :\"+firstname)\r",
+							"pm.environment.set(\"firstname\",firstname)\r",
+							"\r",
+							"var lastname = pm.variables.replaceIn (\"{{$randomLastName}}\")\r",
+							"console.log(\"last Name :\"+lastname)\r",
+							"pm.environment.set(\"lastname\",lastname)\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"first_name\": \"{{firstname}}\",\r\n  \"middle_name\": \"rahman\",\r\n  \"last_name\": \"{{lastname}}\",\r\n  \"date_of_birth\": \"01-01-1999\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/api/studentsDetails",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get student info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.data.first_name).to.eql(pm.environment.get(\"firstname\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.data.middle_name).to.eql(\"rahman\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.data.last_name).to.eql(pm.environment.get(\"lastname\"));\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.data.date_of_birth).to.eql(\"01-01-1999\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"console.log(pm.environment.get(\"id\"))"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/api/studentsDetails/{{id}}",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all studentdetails info",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/api/studentsDetails",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update student info",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":{{id}},\r\n    \"first_name\": \"tisha\",\r\n    \"middle_name\": \"rahman\",\r\n    \"last_name\": \"rimu\",\r\n    \"date_of_birth\": \"01-01-1999\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/api/studentsDetails/{{id}}",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete student info",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":{{id}},\r\n    \"first_name\": \"tisha\",\r\n    \"middle_name\": \"rahman 3\",\r\n    \"last_name\": \"ritu 4\",\r\n    \"date_of_birth\": \"01-01-1999\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/api/studentsDetails/{{id}}",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"api",
+						"studentsDetails",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
